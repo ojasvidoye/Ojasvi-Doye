@@ -27,37 +27,18 @@ function loadModal(title, thumb, body, launchLink) {
 }
 
 
-// Form submission
-const contactForm = document.getElementById('contact-form');
-contactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
+document.getElementById("contact-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the form from submitting
 
-    // Fetch form data
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-
-    // Validate form data (you can add your own validation logic here)
-
-    // Send email using EmailJS
-    emailjs.send('service_mpaov8e', 'template_7yjcncc', {
-        from_name: name,
-        from_email: email,
-        message: message
-    }, 'Ojasvi Doye')
-        .then(function (response) {
-            console.log('Email sent successfully!', response);
-
-            // Clear form inputs
-            document.getElementById('name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('message').value = '';
-
-            // Display success message
-            alert('Thank you for your message!');
-        })
-        .catch(function (error) {
-            console.error('Error sending email:', error);
-            alert('There was an error sending your message. Please try again later.');
+    // Send the form data using EmailJS
+    emailjs.sendForm("your-service-id", "your-template-id", this)
+        .then(function(response) {
+            // Display a success message
+            alert("Message sent successfully!");
+            // Reset the form after submission
+            document.getElementById("contact-form").reset();
+        }, function(error) {
+            // Display an error message
+            alert("Error sending message. Please try again later.");
         });
 });
